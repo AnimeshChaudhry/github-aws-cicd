@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  variables:
+    PACKAGE: "https://github.com/AnimeshChaudhry/github-aws-cicd"
+
 phases:
 
   install:
