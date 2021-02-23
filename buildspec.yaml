@@ -3,8 +3,8 @@ version: 0.2
 env:
   variables:
     PACKAGE: "github.com/AnimeshChaudhry/github-aws-cicd"
-  parameter-store:
-        TEST_SECRET: TestSecret
+  secrets-manager:
+    secret_key_param: GITHUB_ACCESS:GITHUB_ACCESS_TOKEN
 phases:
 
   install:
@@ -44,7 +44,7 @@ phases:
       - echo Entered the build phase...
       - echo Build started on `date`
       - echo SECTERS TEST
-      - echo $TEST_SECRET
+      - echo $secret_key_param
 
 
 artifacts:
