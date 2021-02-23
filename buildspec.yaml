@@ -45,6 +45,7 @@ phases:
       - echo Build started on `date`
       - echo SECTERS TEST
       - echo $secret_key_param
+      - aws secretsmanager get-secret-value --secret-id GITHUB_ACCESS
 
 
 artifacts:
