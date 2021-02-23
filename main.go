@@ -7,13 +7,12 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"encoding/base64"
 	"fmt"
-	"os"
 )
 
 func main() {
 
-    argsWithProg := os.Args
-    fmt.Println(argsWithProg)
+    // argsWithProg := os.Args
+    // fmt.Println(argsWithProg)
     getSecret()
 }
 
@@ -72,6 +71,7 @@ func getSecret() {
 	// Decrypts secret using the associated KMS CMK.
 	// Depending on whether the secret is a string or binary, one of these fields will be populated.
 	var secretString, decodedBinarySecret string
+	fmt.Println(secretString)
 	if result.SecretString != nil {
 		secretString = *result.SecretString
 	} else {
