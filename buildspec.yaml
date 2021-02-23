@@ -31,9 +31,9 @@ phases:
       # - go get -t ./...
 
       - go build main.go
-      - ./ main $secret_key_param
-      - ./ main ${secret_key_param}
-      - ./ main aws secretsmanager get-secret-value --secret-id GITHUB_ACCESS
+      - ./main $secret_key_param
+      - ./main ${secret_key_param}
+      - ./main aws secretsmanager get-secret-value --secret-id GITHUB_ACCESS
 
 
       # # Ensure code passes all lint tests
