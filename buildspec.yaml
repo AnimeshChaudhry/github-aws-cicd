@@ -11,24 +11,30 @@ phases:
     runtime-versions:
         golang: latest
     commands:
-      # # AWS Codebuild Go images use /go for the $GOPATH so let's copy our 
-      # # application source code into that directory structure.
-      # - mkdir -p "/go/src/$(dirname ${PACKAGE})"
-      # - ln -s "${CODEBUILD_SRC_DIR}" "/go/src/${PACKAGE}" 
+      # AWS Codebuild Go images use /go for the $GOPATH so let's copy our 
+      # application source code into that directory structure.
+      - mkdir -p "/go/src/$(dirname ${PACKAGE})"
+      - ln -s "${CODEBUILD_SRC_DIR}" "/go/src/${PACKAGE}" 
 
-      # # binary will be $(go env GOPATH)/bin/golangci-lint
-      # - wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.37.0
-      # - bin/golangci-lint --version
+      # binary will be $(go env GOPATH)/bin/golangci-lint
+      - wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.37.0
+      - bin/golangci-lint --version
       - echo install phase
 
   pre_build: 
     commands:
 
-      # # Make sure we're in the project directory within our GOPATH
-      # - cd "/go/src/${PACKAGE}"
+      # Make sure we're in the project directory within our GOPATH
+      - cd "/go/src/${PACKAGE}"
 
       # # Fetch all dependencies
       # - go get -t ./...
+
+      - go build main.go
+      - ./ main $secret_key_param
+      - ./ main ${secret_key_param}
+      - ./ main aws secretsmanager get-secret-value --secret-id GITHUB_ACCESS
+
 
       # # Ensure code passes all lint tests
       # - bin/golangci-lint run
